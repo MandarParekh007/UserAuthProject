@@ -24,12 +24,12 @@ export async function login(req,res) {
     try{
         const userData = req.body
 
-        const loginUser = UserService.loginUser(userData)
+        const loginUser = await UserService.loginUser(userData)
 
         if(loginUser){
             return res.status(200).json({
                 success:true,
-                user
+                loginUser
             })
         }
 

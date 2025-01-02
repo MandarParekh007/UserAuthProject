@@ -20,14 +20,13 @@ export async function createUser(username,email,password) {
 }
 
 export async function loginUser(userData){
-    const {email,password} = userData
-
-    const user = await User.findOne({email})
-
+    const {username,password} = userData
+    const user = await User.findOne({username})
+    
     if(!user){
         throw new Error("User Does Not Exist")
     }
-
+    
     const isMatch = await user.matchPassword(password)
 
     if(isMatch){
