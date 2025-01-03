@@ -38,7 +38,6 @@ export async function loginUser(userData){
 
 
 export async function getUserById(id) {
-    try {
         // Convert the id to an ObjectId
         const objectId = new ObjectId(id);
         
@@ -46,10 +45,7 @@ export async function getUserById(id) {
         const user = await User.findOne({ _id: objectId });
         
         return user;
-    } catch (error) {
-        console.error("Error in getUserById:", error);
-        throw new Error("Invalid ID format");
-    }
+
 }
 
 

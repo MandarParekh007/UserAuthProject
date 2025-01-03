@@ -6,6 +6,14 @@ export const validateLogin = [
     check("password").not().isEmail().trim().escape()
 ]
 
+export function HandleError(req,res,next){
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+}
+
 export const validateRegister = [
     check("email").isEmail().withMessage("Please Enter A Valid Email").normalizeEmail(),
     check("password").isLength({min:6}).withMessage("Password Must Be 6 characters long").trim().escape(),
