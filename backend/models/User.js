@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -27,6 +28,17 @@ userSchema.pre('validate', async function (next) {
 
     next();
 })
+
+userSchema.methods.createHash = async (userData,res) => {
+    try{
+        const {id} = userData
+        const token = await jwt.sign(id, process.env.JWT_SECRET)
+
+        return token
+    }catch(err){
+
+    }
+}
 
 
 userSchema.methods.matchPassword = async function (password) {

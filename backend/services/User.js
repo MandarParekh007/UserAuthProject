@@ -1,8 +1,9 @@
+import mongoose from "mongoose";
 import User from "../models/User.js";
-
+import { ObjectId } from "mongodb";
+import jwt from "jsonwebtoken"
 
 export async function createUser(username,email,password) {
-
         const user = await User.findOne({username})
 
         if(!user){
@@ -33,4 +34,28 @@ export async function loginUser(userData){
         return user
     }
 
+}
+
+
+export async function getUserById(id) {
+    try {
+        // Convert the id to an ObjectId
+        const objectId = new ObjectId(id);
+        
+        // Query the database using the ObjectId
+        const user = await User.findOne({ _id: objectId });
+        
+        return user;
+    } catch (error) {
+        console.error("Error in getUserById:", error);
+        throw new Error("Invalid ID format");
+    }
+}
+
+
+export async function verifyJwt(token)
+{
+    const id = await jwt.verify(token,process.env.JWT_SECRET);
+
+    return id
 }
