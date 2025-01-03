@@ -6,8 +6,9 @@ import { isAuthenticated } from "../../middlewares/isAuthenticated.js"
 const router = express.Router()
 
 
-router.post('/user',validateRegister,HandleError,register)
-router.post('/user/login',validateLogin,HandleError,login)
+router.post('/user',validateRegister,register)
+router.post('/user/login',validateLogin,login)
+
 router.use(isAuthenticated)
 router.get('/user/:id',getUserDetails)
 
