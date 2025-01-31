@@ -76,7 +76,8 @@ export async function getUserDetails(req,res){
     {
         res.status(500).json({
             success:false,
-            message:"Something Went Wrong"
+            message:"Something Went Wrong",
+            error:err.message
         })
     }
 

@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import User from "../models/User.js";
 import { ObjectId } from "mongodb";
 import jwt from "jsonwebtoken"
@@ -7,13 +6,12 @@ export async function createUser(username,email,password) {
         const user = await User.findOne({username})
 
         if(!user){
-         const createdUser = await User.insertMany({
+         return await User.insertMany({
                 username,
                 email,
                 password
             })
 
-            return createdUser;
         }else{
             throw new Error("User Already There")
         }
@@ -42,16 +40,13 @@ export async function getUserById(id) {
         const objectId = new ObjectId(id);
         
         // Query the database using the ObjectId
-        const user = await User.findOne({ _id: objectId });
-        
-        return user;
+        return await User.findOne({ _id: objectId });
 
 }
 
 
 export async function verifyJwt(token)
 {
-    const id = await jwt.verify(token,process.env.JWT_SECRET);
-
-    return id
+    const {JWT_SECRET} = process.env
+    return await jwt.verify(token, JWT_SECRET);
 }

@@ -36,7 +36,13 @@ userSchema.methods.createHash = async (userData,res) => {
 
         return token
     }catch(err){
-
+        return res.status(500).json({
+            success: false,
+            message:'Error while creating hash',
+            data: {
+                error:{message:err.message}
+            }
+        })
     }
 }
 
